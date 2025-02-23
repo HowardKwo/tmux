@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# 检查是否在 tmux session 中
+if ! tmux has-session 2>/dev/null; then
+  echo "Not in a tmux session. Exiting."
+  exit 1
+fi
+
+# 检查是否传入了参数
+if [ $# -eq 0 ]; then
+  echo "No window number provided. Exiting."
+  exit 1
+fi
+
+# 获取窗口号（传入的第一个参数）
+window_num=$1
+
+
+
+
+
+
+# 根据窗口号决定窗口名称
+case $window_num in
+  0)
+    window_name="💻"
+    ;;
+  1)
+    window_name="🚂"
+    ;;
+  2)
+    window_name="🪲"
+    ;;
+  3)
+    window_name="🖼️"
+    ;;
+  4)
+    window_name="📡"
+    ;;
+  5)
+    window_name="📝"
+    ;;
+  *)
+    # 如果不是 0 到 5 之间的数字，什么也不做
+    exit 0
+    ;;
+esac
+
+# 检查指定的窗口是否存在
+if tmux list-windows -t :$window_num >/dev/null 2>&1; then
+  # 获取指定窗口的名称
+  current_window_name=$(tmux display-message -p -t :$window_num '#W')
+
+  # 如果窗口名称不匹配，重命名窗口
+  if [ "$current_window_name" != "$window_name" ]; then
+    tmux rename-window -t :$window_num "$window_name"
+  fi
+
+  # 切换到指定窗口
+  tmux select-window -t :$window_num
+else
+  # 如果窗口不存在，创建并命名为指定名称
+  tmux new-window -t :$window_num -n "$window_name"
+  # 切换到新创建的窗口
+  tmux select-window -t :$window_num
+fi
+
