@@ -16,32 +16,22 @@ fi
 window_num=$1
 
 
-
-
-
-
 # 根据窗口号决定窗口名称
 case $window_num in
   0)
-    window_name="💻"
+    window_name="[ Coding]"
     ;;
   1)
-    window_name="🚂"
+    window_name="[/ Run/Debug]"
     ;;
   2)
-    window_name="🪲"
+    window_name="[ Data]"
     ;;
   3)
-    window_name="🖼️"
-    ;;
-  4)
-    window_name="📡"
-    ;;
-  5)
-    window_name="📝"
+    window_name="[ Coding]"
     ;;
   *)
-    # 如果不是 0 到 5 之间的数字，什么也不做
+    # 如果不是 0 到 3 之间的数字，什么也不做
     exit 0
     ;;
 esac
